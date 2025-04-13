@@ -24,18 +24,18 @@ const Home = () => {
     };
 
     // Add structured data to head
-    let script = document.querySelector('#org-structured-data');
+    let script = document.querySelector('#home-structured-data');
     if (script) {
       script.remove();
     }
-    script = document.createElement('script');
-    script.id = 'org-structured-data';
-    script.type = 'application/ld+json';
-    script.text = JSON.stringify(structuredData);
-    document.head.appendChild(script);
+    const scriptElement = document.createElement('script');
+    scriptElement.id = 'home-structured-data';
+    scriptElement.type = 'application/ld+json';
+    scriptElement.textContent = JSON.stringify(structuredData);
+    document.head.appendChild(scriptElement);
 
     return () => {
-      const script = document.querySelector('#org-structured-data');
+      const script = document.querySelector('#home-structured-data');
       if (script) {
         script.remove();
       }

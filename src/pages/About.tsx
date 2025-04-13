@@ -47,11 +47,11 @@ const About = () => {
     if (script) {
       script.remove();
     }
-    script = document.createElement('script');
-    script.id = 'about-structured-data';
-    script.type = 'application/ld+json';
-    script.text = JSON.stringify(structuredData);
-    document.head.appendChild(script);
+    const scriptElement = document.createElement('script');
+    scriptElement.id = 'about-structured-data';
+    scriptElement.type = 'application/ld+json';
+    scriptElement.textContent = JSON.stringify(structuredData);
+    document.head.appendChild(scriptElement);
 
     return () => {
       const script = document.querySelector('#about-structured-data');
