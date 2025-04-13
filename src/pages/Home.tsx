@@ -1,5 +1,14 @@
 import { useEffect } from 'react';
 import SEO from '../components/SEO';
+import Banner from '../components/Banner';
+
+// Import banner images
+import bannerPatchCord from '../assets/banner/BANNERFIBEROPTICPATCHCORD.png';
+import bannerTool from '../assets/banner/BANNERFIBEROPTICTOOL.png';
+import bannerAccessory from '../assets/banner/BannerFIBEROPTICACCESSORY.png';
+import bannerSplicer from '../assets/banner/BANNERFUSIONSPLICER.png';
+import bannerOTDR from '../assets/banner/BANNEROTDR.png';
+import banner1 from '../assets/banner/1.png';
 
 const Home = () => {
   useEffect(() => {
@@ -42,6 +51,51 @@ const Home = () => {
     };
   }, []);
 
+  const banners = [
+    {
+      image: bannerPatchCord,
+      title: "Fiber Optic Patch Cord",
+      description: "High-quality fiber optic patch cords for reliable network connections",
+      buttonText: "View Products",
+      buttonLink: "/products"
+    },
+    {
+      image: bannerTool,
+      title: "Fiber Optic Tools",
+      description: "Professional tools for fiber optic installation and maintenance",
+      buttonText: "Explore Tools",
+      buttonLink: "/products"
+    },
+    {
+      image: bannerAccessory,
+      title: "Fiber Optic Accessories",
+      description: "Complete range of accessories for your fiber optic needs",
+      buttonText: "View Accessories",
+      buttonLink: "/products"
+    },
+    {
+      image: bannerSplicer,
+      title: "Fusion Splicer",
+      description: "High-precision fusion splicers for perfect fiber optic connections",
+      buttonText: "Learn More",
+      buttonLink: "/products"
+    },
+    {
+      image: bannerOTDR,
+      title: "OTDR Equipment",
+      description: "Advanced Optical Time Domain Reflectometer for precise measurements",
+      buttonText: "Discover More",
+      buttonLink: "/products"
+    },
+    {
+      image: banner1,
+      title: "FASSER Networks",
+      description: "Your trusted partner for all fiber optic solutions",
+      buttonText: "Contact Us",
+      buttonLink: "/contact"
+    }
+  ];
+
   return (
     <>
       <SEO 
@@ -50,16 +104,8 @@ const Home = () => {
         canonicalUrl="https://your-domain.com"
       />
       <div className="min-h-screen">
-        {/* Hero Section */}
-        <div className="hero min-h-[60vh] bg-base-200">
-          <div className="hero-content text-center">
-            <div className="max-w-md">
-              <h1 className="text-5xl font-bold">FASSER Networks</h1>
-              <p className="py-6">Perusahaan kami telah berdiri sejak tahun 2022 dan bergerak di bidang Fiber Optic, Fusion Splicer, Optical Time Domain Reflectometer dan Peralatan Fiber Optic lainnya.</p>
-              <button className="btn btn-primary">Get Started</button>
-            </div>
-          </div>
-        </div>
+        {/* Banner Section */}
+        <Banner banners={banners} />
 
         {/* Features Section */}
         <section className="py-12">

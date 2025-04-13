@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link, Outlet } from 'react-router-dom';
+import logo from '../assets/logo.png';
 
 const Layout = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -25,7 +26,10 @@ const Layout = () => {
               </ul>
             )}
           </div>
-          <Link to="/" className="btn btn-ghost normal-case text-xl">FASSER Networks</Link>
+          <Link to="/" className="flex items-center gap-2">
+            <img src={logo} alt="FASSER Networks Logo" className="h-10 w-auto" />
+            <span className="text-xl font-semibold"></span>
+          </Link>
         </div>
         <div className="navbar-end hidden lg:flex">
           <ul className="menu menu-horizontal px-1">
@@ -42,6 +46,55 @@ const Layout = () => {
       <main className="flex-grow">
         <Outlet />
       </main>
+
+      {/* Black Box Section */}
+      <div className="bg-neutral text-neutral-content py-12">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {/* Services Section */}
+            <div className="card bg-neutral">
+              <div className="card-body">
+                <h3 className="card-title">FASSER Networks Services</h3>
+                <p>
+                  FASSER Networks memberikan garansi resmi 2 tahun, produk berkualitas dan lengkap sesuai dengan kebutuhan anda.
+                </p>
+              </div>
+            </div>
+
+            {/* Help & Contact Section */}
+            <div className="card bg-neutral">
+              <div className="card-body">
+                <h3 className="card-title">Help & Contact</h3>
+                <div className="space-y-2">
+                  <p className="font-semibold">WhatsApp:</p>
+                  <div className="space-y-1">
+                    <a href="tel:0813-2262-2658" className="link link-hover block">0813-2262-2658</a>
+                    <a href="tel:0822-2999-7768" className="link link-hover block">0822-2999-7768</a>
+                    <a href="tel:0812-8001-9996" className="link link-hover block">0812-8001-9996</a>
+                  </div>
+                  <p className="font-semibold mt-4">Email:</p>
+                  <a href="mailto:cs@alaskaputraperdana.com" className="link link-hover">
+                    cs@alaskaputraperdana.com
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            {/* Product Category */}
+            <div className="card bg-neutral">
+              <div className="card-body">
+                <h3 className="card-title">Product Category</h3>
+                <ul className="menu">
+                  <li><a className="link link-hover">Patch Cord</a></li>
+                  <li><a className="link link-hover">Fiber Optic Tool</a></li>
+                  <li><a className="link link-hover">Fiber Optic Equipment</a></li>
+                  <li><a className="link link-hover">Fiber Optic Accessory</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
       {/* Footer */}
       <footer className="footer footer-center p-10 bg-base-200 text-base-content">

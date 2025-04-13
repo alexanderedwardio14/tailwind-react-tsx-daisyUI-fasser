@@ -4,7 +4,21 @@ import { supabase } from '../lib/supabase'
 import SEO from '../components/SEO'
 import Breadcrumbs from '../components/Breadcrumbs'
 import { slugify } from '../utils/slugify'
-import ProductSidebar from '../components/ProductSidebar';
+import ProductSidebar from '../components/ProductSidebar'
+
+// Import category images
+import patchCordImage from '../assets/PatchCord.png'
+import fiberOpticToolImage from '../assets/FiberOpticTool.png'
+import fiberOpticEquipmentImage from '../assets/FiberOpticEquipment.png'
+import fiberOpticAccessoryImage from '../assets/FiberOpticAccessory.png'
+
+// Category image mapping
+const categoryImages: { [key: string]: string } = {
+  'Patch Cord': patchCordImage,
+  'Fiber Optic Tool': fiberOpticToolImage,
+  'Fiber Optic Equipment': fiberOpticEquipmentImage,
+  'Fiber Optic Accessory': fiberOpticAccessoryImage,
+}
 
 interface Product {
   ID: string
@@ -19,6 +33,7 @@ interface Product {
 const Products = () => {
   const { category } = useParams();
   const [products, setProducts] = useState<Product[]>([])
+  const [categories, setCategories] = useState<string[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
@@ -41,14 +56,15 @@ const Products = () => {
           throw error
         }
 
-        console.log('Connection successful')
-        console.log('Fetched products:', data)
-
         if (!data || data.length === 0) {
           console.log('No products found in the database')
           setProducts([])
           return
         }
+
+        // Get unique categories
+        const uniqueCategories = [...new Set(data.map(product => product.Category))]
+        setCategories(uniqueCategories)
 
         const validProducts = data.filter(product => product.ID).map(product => ({
           ...product,
@@ -124,6 +140,54 @@ const Products = () => {
     )
   }
 
+  const breadcrumbItems = [
+    { name: 'Home', path: '/' },
+    { name: 'Products', path: '/products' },
+    ...(category ? [{ name: category, path: `/products/${encodeURIComponent(category)}`, isLast: true }] : [])
+  ]
+
+  // If no category is selected, show category selection
+  if (!category) {
+    return (
+      <>
+        <SEO 
+          title="Select Product Category"
+          description="Browse our product categories to find the perfect fiber optic solution for your needs."
+        />
+        <div className="min-h-screen py-12">
+          <div className="container mx-auto px-4">
+            <Breadcrumbs items={breadcrumbItems} />
+            <h1 className="text-4xl font-bold text-center mb-8">Select a Category</h1>
+            
+            <div className="max-w-4xl mx-auto">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+                {categories.map((cat) => (
+                  <Link 
+                    key={cat}
+                    to={`/products/${encodeURIComponent(cat)}`}
+                    className="card bg-base-100 shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1"
+                  >
+                    <figure className="px-4 pt-4">
+                      <img
+                        src={categoryImages[cat] || '/images/placeholder.jpg'}
+                        alt={cat}
+                        className="rounded-xl h-48 w-full object-contain"
+                      />
+                    </figure>
+                    <div className="card-body text-center">
+                      <h2 className="card-title justify-center text-2xl">{cat}</h2>
+                      <p className="text-base-content/70">Click to view products in this category</p>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </>
+    )
+  }
+
   const productsByCategory = products.reduce((acc: { [key: string]: Product[] }, product) => {
     const category = product.Category || 'Uncategorized'
     if (!acc[category]) {
@@ -132,12 +196,6 @@ const Products = () => {
     acc[category].push(product)
     return acc
   }, {})
-
-  const breadcrumbItems = [
-    { name: 'Home', path: '/' },
-    { name: 'Products', path: '/products' },
-    ...(category ? [{ name: category, path: `/products/${encodeURIComponent(category)}`, isLast: true }] : [])
-  ]
 
   return (
     <>
